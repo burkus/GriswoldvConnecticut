@@ -8,12 +8,19 @@ slideFiles = os.listdir(slidesPath)
 
 slides = ""
 for file in slideFiles:
-    filePath = slidesPath + "\\" + file
+    if "posix" in os.name:
+        filePath = slidesPath + '/' + file
+    else:
+        filePath = slidesPath + "\\" + file
     html = open(filePath, 'r').read()
     slides += html
 
 def writeConcatFile(contents):
-    concatFilePath = os.getcwd() + r"\concat.html"
+    concatFilePath = os.getcwd()
+    if "posix" in os.name:
+        concatFilePath += '/concat.html'
+    else:
+        concatFilePath += r"\concat.html"
     if isfile(concatFilePath):
         os.remove(concatFilePath)
     concatFile = open('concat.html', 'w+')
